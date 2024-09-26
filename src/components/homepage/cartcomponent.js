@@ -1,6 +1,5 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
-import Bookicon from '../../assets/icons/bookicon';
 import Tableicon from '../../assets/icons/tableicon';
 import Joystickicon from '../../assets/icons/joystick';
 import Profileicon from '../../assets/icons/profileicon';
@@ -12,7 +11,7 @@ function CartSummary() {
     <View style={{marginHorizontal: 20}}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View>
-          <Text style={styles.text2}>Cart Summary</Text>
+          <Text style={[styles.text2 , {fontFamily: 'Poppins.Regular'}]}>Cart Summary</Text>
         </View>
         <View style={{flexDirection: 'row', gap: 15}}>
           <TouchableOpacity

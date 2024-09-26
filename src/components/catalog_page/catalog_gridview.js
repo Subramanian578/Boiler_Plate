@@ -12,7 +12,7 @@ import {useNavigation} from '@react-navigation/native';
 import Description from '../../assets/icons/description';
 import Verticals from './verticals';
 import {styles} from './Styles';
-import DATA from './data_json';
+import DATA from '../../screens/data_json';
 
 const GridItem = ({item}) => {
 
