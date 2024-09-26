@@ -7,8 +7,148 @@ import Addicon1 from '../assets/icons/addicon';
 import Subicon1 from '../assets/icons/subicon';
 import Arrowfront1 from '../assets/icons/arrowfront_white';
 
+// export default function Homescreen({navigation, route}) {
+//   const [cartItems, setCartItems] = useState([]);
+
+//   useEffect(() => {
+//     console.log('Routed to HomeScreen');
+//     if (route.params?.cartItems) {
+//       const newOrder = route.params.cartItems;
+//       setCartItems(prevDetails => {
+//         const existingItemIndex = prevDetails.findIndex(
+//           item => item.name === newOrder.name,
+//         );
+//         if (existingItemIndex > -1) {
+//           const updatedDetails = [...prevDetails];
+//           updatedDetails[existingItemIndex].quantity += newOrder.quantity;
+//           updatedDetails[existingItemIndex].total += newOrder.total;
+//           return updatedDetails;
+//         }
+//         return [...prevDetails, newOrder];
+//       });
+//     }
+//   }, [route.params]);
+
+//   const handleDecrease = index => {
+//     setCartItems(prevDetails => {
+//       const updatedDetails = [...prevDetails];
+//       const unitPrice =
+//         updatedDetails[index].total / updatedDetails[index].quantity;
+
+//       if (updatedDetails[index].quantity > 1) {
+//         updatedDetails[index].quantity -= 1;
+//         updatedDetails[index].total =
+//           unitPrice * updatedDetails[index].quantity;
+//       } else {
+//         updatedDetails.splice(index, 1);
+//       }
+//       return updatedDetails;
+//     });
+//   };
+
+//   const handleIncrease = index => {
+//     setCartItems(prevDetails => {
+//       const updatedDetails = [...prevDetails];
+//       const unitPrice =
+//         updatedDetails[index].total / updatedDetails[index].quantity;
+
+//       updatedDetails[index].quantity += 1;
+//       updatedDetails[index].total = unitPrice * updatedDetails[index].quantity;
+//       return updatedDetails;
+//     });
+//   };
+  
+
+//   return (
+//     <SafeAreaView style={styles.container}>
+//       <Home_Appbar />
+//       <ScrollView style = {{marginBottom: 50}}>
+//         <SearchBar />
+//         <CartSummary />
+//         <View style={styles.table}>
+//           <View style={styles.tableRow}>
+//             <Text style={styles.tableHeaderLeft}>Item({cartItems.length})</Text>
+//             <Text style={styles.tableHeaderRight}>Quantity</Text>
+//           </View>
+//           <View style={styles.line1} />
+
+//           {cartItems.length === 0 ? (
+//             <View style={styles.emptyCartContainer}>
+//               <Image
+//                 style={styles.emptyCartIcon}
+//                 source={{
+//                   uri: 'https://cdn-icons-png.flaticon.com/512/11010/11010851.png',
+//                 }}
+//               />
+//               <Text style={styles.emptyCartText}>Cart is empty</Text>
+//               <Text style={styles.scanInstruction}>
+//                 Scan barcode or add items from catalog
+//               </Text>
+//             </View>
+//           ) : (
+//             cartItems.map((orderItem, index) => {
+//               const priceValue = parseFloat(orderItem.total) || 0;
+
+//               console.log(orderItem);
+
+//               return (
+//                 <View key={index}>
+//                   <View style={styles.tableRow}>
+//                     <View style={styles.itemColumn}>
+//                       <Text style={styles.tableCell}>{orderItem.name}</Text>
+//                       <Text style={styles.tableCell1}>{orderItem.variant}</Text>
+//                     </View>
+//                     <View style={styles.amountColumn}>
+//                       <View style={styles.countContainer}>
+//                         <TouchableOpacity
+//                           onPress={() => handleDecrease(index)}
+//                           disabled={orderItem.quantity <= 1}>
+//                           <Subicon1 style={styles.icon} />
+//                         </TouchableOpacity>
+//                         <Text style={styles.countText}>
+//                           {orderItem.quantity}
+//                         </Text>
+//                         <TouchableOpacity onPress={() => handleIncrease(index)}>
+//                           <Addicon1 style={styles.icon} />
+//                         </TouchableOpacity>
+//                       </View>
+//                       <Text style={styles.countText1}>
+//                         {priceValue.toFixed(2)}
+//                       </Text>
+//                     </View>
+//                   </View>
+//                   <View style={styles.line1} />
+//                 </View>
+//               );
+//             })
+//           )}
+//         </View>
+//       </ScrollView>
+
+//       {cartItems.length > 0 && (
+//         <View style={styles.fixedBottom}>
+//           <TouchableOpacity
+//             style={styles.paymentButton}
+//             onPress={() => navigation.navigate('Payment_Summary')}>
+//             <View style={styles.paymentButtonContent}>
+//               <View>
+//                 <Text style={styles.text}>Items</Text>
+//                 <Text style={styles.text}>{cartItems.length}</Text>
+//               </View>
+//               <View style={styles.arrowContainer}>
+//                 <Text style={styles.text}>View Payment Summary</Text>
+//                 <Arrowfront1 />
+//               </View>
+//             </View>
+//           </TouchableOpacity>
+//         </View>
+//       )}
+//     </SafeAreaView>
+//   );
+// }
 export default function Homescreen({navigation, route}) {
   const [cartItems, setCartItems] = useState([]);
+  const order_id = "123456789";
 
   useEffect(() => {
     console.log('Routed to HomeScreen');
@@ -57,12 +197,15 @@ export default function Homescreen({navigation, route}) {
       return updatedDetails;
     });
   };
-  
+
+  // Calculate total price for cart items
+  const totalPrice = cartItems.reduce((acc, item) => acc + item.total, 0);
+  console.log('Total Price:', totalPrice);
 
   return (
     <SafeAreaView style={styles.container}>
       <Home_Appbar />
-      <ScrollView style = {{marginBottom: 50}}>
+      <ScrollView style={{marginBottom: 50}}>
         <SearchBar />
         <CartSummary />
         <View style={styles.table}>
@@ -88,9 +231,6 @@ export default function Homescreen({navigation, route}) {
           ) : (
             cartItems.map((orderItem, index) => {
               const priceValue = parseFloat(orderItem.total) || 0;
-
-              console.log(orderItem);
-              {/* if pushing to backend , i have to push orderItem as all updates are in orderItem only */}
 
               return (
                 <View key={index}>
@@ -130,7 +270,8 @@ export default function Homescreen({navigation, route}) {
         <View style={styles.fixedBottom}>
           <TouchableOpacity
             style={styles.paymentButton}
-            onPress={() => navigation.navigate('Payment_Summary')}>
+            onPress={() => navigation.navigate('Payment_Summary', { totalPrice, order_id })}>
+            {/* Pass totalPrice to Payment_Summary */}
             <View style={styles.paymentButtonContent}>
               <View>
                 <Text style={styles.text}>Items</Text>

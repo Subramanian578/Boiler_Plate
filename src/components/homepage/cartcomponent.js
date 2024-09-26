@@ -7,6 +7,7 @@ import Profileicon from '../../assets/icons/profileicon';
 import Doticons from '../../assets/icons/3doticon';
 
 function CartSummary() {
+  const order_id = "123456789";
   return (
     <View style={{marginHorizontal: 20}}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -40,7 +41,7 @@ function CartSummary() {
       </View>
       <View style={styles.order}>
         <Text style={styles.text}>Order ID:</Text>
-        <Text style={styles.text1}>0000001</Text>
+        <Text style={styles.text1}>{order_id}</Text>
       </View>
       <View style={styles.sam}>
         <View style={styles.sam}>
